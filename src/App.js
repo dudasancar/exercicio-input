@@ -52,9 +52,9 @@ function App() {
             : item
           }
           
-          <button onClick={salvarItemEditar}>salvar</button>
+          <button onClick={() => salvarItemEditar(index)}>salvar</button>
           <button onClick={() => Aparecer(item)}>editar</button>
-          <button onClick={deletarItem}>excluir</button>
+          <button onClick={() => deletarItem(index)}>excluir</button>
         </li>
       ))}
       </ul>
