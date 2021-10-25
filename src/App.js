@@ -1,23 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import react, { useEffect, useState } from "react";
 
 function App() {
+    const [input, setInput] = useState('');
+    const [lista, setLista] = useState(['']);
+    const [inputEditar, setInputEditar] = useState('')
+    const [aparecer, setAparecer] = useState(false);
+
+    function Aparecer (item) {
+      aparecer ? setAparecer(false) : setAparecer(true);
+      setInputEditar(item);
+    };
+  
+    function handleChangeInput(event) {
+      setInput(event.target.value)
+    }
+
+    function handleChangeInputEditar(event) {
+      setInputEditar(event.target.value)
+    }
+
+    function salvarItem() {
+    const aux = [...lista];
+    aux.push(input);
+    setLista(aux);
+  }
+
+  function deletarItem(index) {
+    const aux = [...lista];
+    aux.splice(index, 1);
+    setLista(aux);
+  }
+
+  function salvarItemEditar(index) {
+    const aux = [...lista];
+    aux[index] = inputEditar;
+    setLista(aux);
+    setAparecer(!aparecer)
+  }
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" value={input} onChange={handleChangeInput} />
+      <button onClick={salvarItem}>salvar</button>
+      <ul id="lista">
+      {lista.map((item, index) => (
+        <li>
+          
+          {aparecer ? (
+            <input value={inputEditar} onChange={handleChangeInputEditar} />)
+            : item
+          }
+          
+          <button onClick={salvarItemEditar}>salvar</button>
+          <button onClick={() => Aparecer(item)}>editar</button>
+          <button onClick={deletarItem}>excluir</button>
+        </li>
+      ))}
+      </ul>
     </div>
   );
 }
